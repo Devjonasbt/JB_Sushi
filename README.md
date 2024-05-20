@@ -1,2 +1,2 @@
-# JB_Sushi
-https://github.com/Devjonasbt/JB_Sushi/actions/runs/9166221477
+https://devjonasbt.github.io/JB_Sushi/
+
