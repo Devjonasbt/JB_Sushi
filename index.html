@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,14 +73,14 @@
                     class="w-28 h-28 rounded-md hover:scale-110 hover:rotate-2 duration-300">
 
                 <div>
-                    <h2 class="font-bold">Combinado especial - 17 peças</h2>
-                    <p class="text-sm"> 7 fatias de sashimi, 2 djo de camarão com cream cheese, pimenta tailandesa e cebolinha, 2 djo de sal...</p>
+                    <h2 class="font-bold">Temaki especial</h2>
+                    <p class="text-sm"> Temaki Especial é um cone de nori crocante recheado com arroz de sushi temperado, peixe fresco (salmão), cebolinha, e complementos deliciosos</p>
 
                     <div class="flex items-center justify-between">
                         <p class="font-bold text-lg">R$37.90</p>
-                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="Combinado- 17 peças" data-price="37.90">
-    <i class="fa fa-cart-plus text-lg text-white"></i>
-</button>
+                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="temaki especial" data-price="37.90">
+                        <i class="fa fa-cart-plus text-lg text-white"></i>
+                        </button>
 
                     </div>
                 </div>
@@ -235,33 +235,69 @@
                     </div>
                 </div>
             </div>
+            <div class="flex gap-3 w-full">
+                <img src="./assets/soda.jpg" alt="guarana lata"
+                    class="w-28 h-28 rounded-md hover:scale-110 hover:rotate-2 duration-300">
+
+                <div class="w-full">
+                    <h2 class="font-bold">soda</h2>
+
+                    <div class="flex items-center justify-between">
+                        <p class="font-bold text-lg">R$ 7,00</p>
+                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="soda lata"
+                            data-price="7">
+                            <i class="fa fa-cart-plus text-lg text-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-3 w-full">
+                <img src="./assets/fanta.png" alt="guarana lata"
+                    class="w-28 h-28 rounded-md hover:scale-110 hover:rotate-2 duration-300">
+
+                <div class="w-full">
+                    <h2 class="font-bold">Fanta lata</h2>
+
+                    <div class="flex items-center justify-between">
+                        <p class="font-bold text-lg">R$ 5,00</p>
+                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="fanta lata"
+                            data-price="5">
+                            <i class="fa fa-cart-plus text-lg text-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Modal -->
     <div class="bg-black/60 w-full h-full fixed top-0 left-0 z-[99] hidden items-center justify-center" id="cart-modal">
-
-        <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
+        <div class="modal-content">
             <h2 class="text-center font-bold text-2xl mb-2">Meu carrinho</h2>
+            <div id="cart-items" class="flex flex-col mb-2">
+                <!-- Itens do carrinho serão inseridos aqui -->
+            </div>
+            <p class="font-bold mt-4">Taxa de entrega: <span id="delivery-fee">R$5,00</span></p>
 
-            <div id="cart-items" class="flex justify-between flex-col mb-2"></div>
-
+  
             <p class="font-bold">Total: <span id="cart-total">0.00</span></p>
+            <p class="font-bold mt-4">Descrição do pedido (opcional):</p>
+        <textarea id="order-description" placeholder="Digite uma descrição sobre seu pedido" class="w-full border-2 p-1 rounded my-1"></textarea>
+
+    
             <p class="font-bold mt-4">Forma de pagamento:</p>
-<div class="flex items-center gap-4">
-    <input type="radio" id="pagamento_dinheiro" name="forma_pagamento" value="dinheiro">
-    <label for="pagamento_dinheiro">Dinheiro</label>
-    <input type="radio" id="pagamento_pix" name="forma_pagamento" value="pix">
-    <label for="pagamento_pix">Pix</label>
-    <input type="radio" id="pagamento_cartao" name="forma_pagamento" value="cartao">
-    <label for="pagamento_cartao">Cartão</label>
-</div>
+            <div class="flex items-center gap-4 pagamento">
+                <input type="radio" id="pagamento_dinheiro" name="forma_pagamento" value="dinheiro">
+                <label for="pagamento_dinheiro">Dinheiro</label>
+                <input type="radio" id="pagamento_pix" name="forma_pagamento" value="pix">
+                <label for="pagamento_pix">Pix</label>
+                <input type="radio" id="pagamento_cartao" name="forma_pagamento" value="cartão">
+                <label for="pagamento_cartao">Cartão</label>
+            </div>
             <p class="font-bold mt-4">Endereço de entrega</p>
             <input type="text" placeholder="Digite seu endereço para entrega" id="address"
                 class="w-full border-2 p-1 rounded my-1" />
-
             <p class="text-red-500 hidden" id="address-warn">Digite seu endereço completo!!</p>
-
             <div class="w-full flex justify-between mt-5">
                 <button id="close-modal-btn">Fechar</button>
                 <button id="checkout-btn" class="bg-green-600 text-white px-4 py-1 rounded">Finalizar pedido</button>
@@ -275,8 +311,8 @@
             Veja meu carrinho
             <i class="fa fa-cart-plus text-lg text-white"></i>
         </button>
-
     </footer>
+
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="script.js"></script>

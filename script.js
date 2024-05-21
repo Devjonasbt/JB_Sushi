@@ -8,6 +8,7 @@ const checkoutBtnModal = document.getElementById('checkout-btn');
 const closeBtnModal = document.getElementById('close-modal-btn');
 const addressInputModal = document.getElementById('address');
 const addressWarnModal = document.getElementById('address-warn');
+const orderDescriptionInput = document.getElementById('order-description');
 
 const cartCounter = document.getElementById('cart-count');
 
@@ -129,62 +130,139 @@ addressInputModal.addEventListener('input', function (event) {
         addressWarnModal.classList.add('hidden');
     }
 });
-
-// Finalizar pedido
 checkoutBtnModal.addEventListener('click', function () {
-    const isOpen = checkRestaurantOpen();
-    if (!isOpen) {
+    // Verificar se o carrinho está vazio
+    if (cartList.length === 0) {
+        // Mostrar uma mensagem para o usuário
         Toastify({
-            text: "Ops!! restaurante fechado no momento",
+            text: "Seu carrinho está vazio. Adicione itens antes de finalizar o pedido.",
             duration: 3000,
-            destination: "https://github.com/Devjonasbt/JB_Sushi.git",
             close: true,
             gravity: "top", // `top` or `bottom`
             position: "left", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-                background: "#ef4444",
-            },
+            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
         }).showToast();
-
+        
+        // Retornar para sair da função
         return;
     }
 
-    if (cartList.length === 0) return;
+    // Seu código existente para finalizar o pedido ...
+});
 
+
+// Finalizar pedido
+// Combine os dois ouvintes de evento em um único ouvinte
+checkoutBtnModal.addEventListener('click', function () {
+    // Verifique se o carrinho está vazio
+    if (cartList.length === 0) {
+        // Mostrar uma mensagem para o usuário
+        Toastify({
+            text: "Seu carrinho está vazio. Adicione itens antes de finalizar o pedido.",
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "left", // `left`, `center` or `right`
+            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
+        }).showToast();
+        
+        // Retorne para sair da função
+        return;
+    }
+
+    // Verifique se o endereço de entrega está preenchido
     if (addressInputModal.value === '') {
         addressWarnModal.classList.remove('hidden');
         addressInputModal.classList.add('border-red-500');
         return;
     }
 
-    // Enviar o pedido para API WhatsApp
+    // Verifique qual opção de pagamento foi selecionada
+    let formaPagamento = '';
+    const formasPagamento = document.querySelectorAll('input[name="forma_pagamento"]');
+    formasPagamento.forEach(opcao => {
+        if (opcao.checked) {
+            formaPagamento = opcao.value;
+        }
+    });
+
+    // Verifique se uma forma de pagamento foi selecionada
+    if (formaPagamento === '') {
+        Toastify({
+            text: "Por favor, selecione uma forma de pagamento!",
+            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
+            duration: 3000
+        }).showToast();
+        return; // Saia da função se nenhuma opção for selecionada
+    }
+
+    // Verifique se o restaurante está aberto
+    const isOpen = checkRestaurantOpen();
+    if (!isOpen) {
+        Toastify({
+            text: "Ops!! Restaurante fechado no momento",
+            duration: 3000,
+            destination: "https://github.com/Devjonasbt/JB_Sushi.git",
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "left", // `left`, `center` or `right`
+            stopOnFocus: true, // Previne o fechamento do toast ao passar o mouse por cima
+            style: {
+                background: "#ef4444",
+            },
+        }).showToast();
+        return; // Saia da função se o restaurante estiver fechado
+    }
+
+    // Taxa de entrega fixa
+    const deliveryFee = 5.00;
+
+    // Obtenha a descrição do pedido
+    const orderDescription = orderDescriptionInput.value.trim();
+
+    // Mapeie os itens do carrinho para uma string formatada
     const cartItems = cartList.map((item) => {
-        return `(${item.quantity}) ${item.name} - Preço: R$${item.price}`;
+        return `(${item.quantity}) ${item.name} - Preço: R$${item.price.toFixed(2)}`;
     }).join("%0A");
 
+    // Codifique o endereço de entrega
     const address = encodeURIComponent(addressInputModal.value);
     const phone = '5511988201237';
+
+    // Calcule o total do pedido
     const total = cartList.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalFormatted = total.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL'
     });
 
-    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ATotal: ${totalFormatted}%0A%0AEndereço: ${address}%0A%0AMuito obrigado!`;
+    // Adicione a descrição do pedido à mensagem, se houver
+    const descriptionText = orderDescription ? ` ${encodeURIComponent(orderDescription)}` : '';
 
+    // Calcule o total do pedido, incluindo a taxa de entrega
+    const totalPedidoComTaxa = total + deliveryFee;
+
+    // Formate o total do pedido para exibição
+    const totalPedidoFormatado = totalPedidoComTaxa.toFixed(2);
+
+    // Crie a mensagem com todos os detalhes do pedido
+    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ADescrição do pedido: ${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0A%0ATotal: R$${totalPedidoFormatado}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereço de entrega: ${address}%0A%0AMuito obrigado!`;
+
+    // Abra o link do WhatsApp com a mensagem
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 
+    // Limpe o carrinho e atualize o modal e o contador do carrinho
     cartList = [];
     updateCartModal();
     updateCartCounter();
 });
 
+
 function checkRestaurantOpen() {
     const data = new Date();
     const hora = data.getHours();
 
-    return hora >= 10 && hora < 23;
+    return hora >= 18 && hora < 23;
 }
 
 const spanItem = document.getElementById('date-span');
@@ -197,28 +275,3 @@ if (isOpen) {
     spanItem.classList.remove('bg-green-600');
     spanItem.classList.add('bg-red-500');
 }
-document.getElementById("checkout-btn").addEventListener("click", function() {
-    // Verificar qual opção de pagamento foi selecionada
-    var formaPagamento;
-
-    if (document.getElementById("pagamento_dinheiro").checked) {
-        formaPagamento = "dinheiro";
-    } else if (document.getElementById("pagamento_pix").checked) {
-        formaPagamento = "pix";
-    } else if (document.getElementById("pagamento_cartao").checked) {
-        formaPagamento = "cartao";
-    } else {
-        // Caso nenhuma opção seja selecionada, você pode exibir uma mensagem de erro ou tomar outra ação
-        Toastify({
-            text: "Por favor, selecione uma forma de pagamento!",
-            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
-            duration: 3000
-        }).showToast();
-        return; // Sair da função se nenhuma opção for selecionada
-    }
-
-    // Aqui você pode fazer o que quiser com a forma de pagamento selecionada
-    console.log("Forma de pagamento selecionada:", formaPagamento);
-
-    // Continuar com o processamento do pedido, por exemplo, enviando para o backend
-});

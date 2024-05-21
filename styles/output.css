@@ -1795,6 +1795,7 @@ video {
 }
 
 .bg-white {
+ 
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
@@ -2578,4 +2579,53 @@ body {
       paint-order: markers;
     }
   }
+}
+/* CSS para permitir rolagem no modal */
+#cart-modal {
+  display: none; /* Certifique-se de que o modal está escondido inicialmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.6);
+  
+  align-items: center;
+  justify-content: center;
+}
+
+#cart-modal .modal-content {
+  
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80%; /* Limite a altura máxima */
+  overflow-y: auto; /* Adicione a rolagem vertical */
+}
+
+#cart-items {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.pagamento input{
+  margin-left: 10px;  
+}
+#order-description {
+  resize: vertical;
+  min-height: 60px;
+}
+.remove-from-cart-btn{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: red;
+  
+}
+#close-modal-btn{
+  background-color: rgb(241, 104, 104);
+  padding: 5px;
+  border-radius: 12px;
+  color: #e5e7eb;
 }
