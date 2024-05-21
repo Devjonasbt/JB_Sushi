@@ -130,25 +130,6 @@ addressInputModal.addEventListener('input', function (event) {
         addressWarnModal.classList.add('hidden');
     }
 });
-checkoutBtnModal.addEventListener('click', function () {
-    // Verificar se o carrinho está vazio
-    if (cartList.length === 0) {
-        // Mostrar uma mensagem para o usuário
-        Toastify({
-            text: "Seu carrinho está vazio. Adicione itens antes de finalizar o pedido.",
-            duration: 3000,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "left", // `left`, `center` or `right`
-            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
-        }).showToast();
-        
-        // Retornar para sair da função
-        return;
-    }
-
-    // Seu código existente para finalizar o pedido ...
-});
 
 
 // Finalizar pedido

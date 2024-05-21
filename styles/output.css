@@ -1806,7 +1806,7 @@ video {
 }
 
 .bg-home {
-  background-image: url('/assets/background.jpg');
+  background-image: url('../assets/background.jpg');
 }
 
 .decoration-slice {
@@ -1832,7 +1832,11 @@ video {
 .bg-cover {
   background-size: cover;
 }
-
+@media (max-width: 700px) {
+  .bg-cover {
+    background-size:auto;
+  }
+}
 .bg-fixed {
   background-attachment: fixed;
 }
@@ -2571,6 +2575,7 @@ body {
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
+ 
 }
 
 @media (prefers-color-scheme: dark) {
