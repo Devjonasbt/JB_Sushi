@@ -171,7 +171,7 @@ checkoutBtnModal.addEventListener('click', function () {
         currency: 'BRL'
     });
 
-    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ATotal: ${totalFormatted} %0A%0AEndereço: ${address}%0A%0AMuito obrigado!`;
+    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ATotal: ${totalFormatted}%0A%0AEndereço: ${address}%0A%0AMuito obrigado!`;
 
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 
