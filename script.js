@@ -197,3 +197,28 @@ if (isOpen) {
     spanItem.classList.remove('bg-green-600');
     spanItem.classList.add('bg-red-500');
 }
+document.getElementById("checkout-btn").addEventListener("click", function() {
+    // Verificar qual opção de pagamento foi selecionada
+    var formaPagamento;
+
+    if (document.getElementById("pagamento_dinheiro").checked) {
+        formaPagamento = "dinheiro";
+    } else if (document.getElementById("pagamento_pix").checked) {
+        formaPagamento = "pix";
+    } else if (document.getElementById("pagamento_cartao").checked) {
+        formaPagamento = "cartao";
+    } else {
+        // Caso nenhuma opção seja selecionada, você pode exibir uma mensagem de erro ou tomar outra ação
+        Toastify({
+            text: "Por favor, selecione uma forma de pagamento!",
+            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
+            duration: 3000
+        }).showToast();
+        return; // Sair da função se nenhuma opção for selecionada
+    }
+
+    // Aqui você pode fazer o que quiser com a forma de pagamento selecionada
+    console.log("Forma de pagamento selecionada:", formaPagamento);
+
+    // Continuar com o processamento do pedido, por exemplo, enviando para o backend
+});
