@@ -139,13 +139,14 @@ checkoutBtnModal.addEventListener('click', function () {
             duration: 3000,
             destination: "https://github.com/Devjonasbt/JB_Sushi.git",
             close: true,
-            gravity: "top",
-            position: "left",
-            stopOnFocus: true,
+            gravity: "top", // `top` or `bottom`
+            position: "left", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
             style: {
                 background: "#ef4444",
             },
         }).showToast();
+
         return;
     }
 
@@ -157,37 +158,22 @@ checkoutBtnModal.addEventListener('click', function () {
         return;
     }
 
-    // Verificar qual opção de pagamento foi selecionada
-    let formaPagamento;
-    if (document.getElementById("pagamento_dinheiro").checked) {
-        formaPagamento = "dinheiro";
-    } else if (document.getElementById("pagamento_pix").checked) {
-        formaPagamento = "pix";
-    } else if (document.getElementById("pagamento_cartao").checked) {
-        formaPagamento = "cartao";
-    } else {
-        Toastify({
-            text: "Por favor, selecione uma forma de pagamento!",
-            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
-            duration: 3000
-        }).showToast();
-        return;
-    }
-
+    // Enviar o pedido para API WhatsApp
     const cartItems = cartList.map((item) => {
-        return `(${item.quantity}) ${item.name} - Preço: R$${item.price.toFixed(2)}`;
+        return `(${item.quantity}) ${item.name} - Preço: R$${item.price}`;
     }).join("%0A");
 
     const address = encodeURIComponent(addressInputModal.value);
-    const phone = '5511988201237'; // Número no formato internacional
+    const phone = '5511988201237';
     const total = cartList.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalFormatted = total.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL'
     });
 
-    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ATotal: ${totalFormatted} %0A%0AEndereço: ${address}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AMuito obrigado!`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ATotal: ${totalFormatted} %0A%0AEndereço: ${address}%0A%0AMuito obrigado!`;
+
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 
     cartList = [];
     updateCartModal();
@@ -213,4 +199,26 @@ if (isOpen) {
 }
 document.getElementById("checkout-btn").addEventListener("click", function() {
     // Verificar qual opção de pagamento foi selecionada
-    
+    var formaPagamento;
+
+    if (document.getElementById("pagamento_dinheiro").checked) {
+        formaPagamento = "dinheiro";
+    } else if (document.getElementById("pagamento_pix").checked) {
+        formaPagamento = "pix";
+    } else if (document.getElementById("pagamento_cartao").checked) {
+        formaPagamento = "cartao";
+    } else {
+        // Caso nenhuma opção seja selecionada, você pode exibir uma mensagem de erro ou tomar outra ação
+        Toastify({
+            text: "Por favor, selecione uma forma de pagamento!",
+            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
+            duration: 3000
+        }).showToast();
+        return; // Sair da função se nenhuma opção for selecionada
+    }
+
+    // Aqui você pode fazer o que quiser com a forma de pagamento selecionada
+    console.log("Forma de pagamento selecionada:", formaPagamento);
+
+    // Continuar com o processamento do pedido, por exemplo, enviando para o backend
+});
