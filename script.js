@@ -158,23 +158,6 @@ checkoutBtnModal.addEventListener('click', function () {
         return;
     }
 
-    // Verificar qual opção de pagamento foi selecionada
-    let formaPagamento;
-    if (document.getElementById("pagamento_dinheiro").checked) {
-        formaPagamento = "Dinheiro";
-    } else if (document.getElementById("pagamento_pix").checked) {
-        formaPagamento = "Pix";
-    } else if (document.getElementById("pagamento_cartao").checked) {
-        formaPagamento = "Cartão";
-    } else {
-        Toastify({
-            text: "Por favor, selecione uma forma de pagamento!",
-            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
-            duration: 3000
-        }).showToast();
-        return;
-    }
-
     // Enviar o pedido para API WhatsApp
     const cartItems = cartList.map((item) => {
         return `(${item.quantity}) ${item.name} - Preço: R$${item.price}`;
@@ -188,8 +171,7 @@ checkoutBtnModal.addEventListener('click', function () {
         currency: 'BRL'
     });
 
-    // Adicionando a forma de pagamento à mensagem
-    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ATotal: ${totalFormatted}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereço: ${address}%0A%0AMuito obrigado!`;
+    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ATotal: ${totalFormatted} %0A%0AEndereço: ${address}%0A%0AMuito obrigado!`;
 
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 
@@ -197,7 +179,6 @@ checkoutBtnModal.addEventListener('click', function () {
     updateCartModal();
     updateCartCounter();
 });
-
 
 function checkRestaurantOpen() {
     const data = new Date();
@@ -235,3 +216,9 @@ document.getElementById("checkout-btn").addEventListener("click", function() {
         }).showToast();
         return; // Sair da função se nenhuma opção for selecionada
     }
+
+    // Aqui você pode fazer o que quiser com a forma de pagamento selecionada
+    console.log("Forma de pagamento selecionada:", formaPagamento);
+
+    // Continuar com o processamento do pedido, por exemplo, enviando para o backend
+});
