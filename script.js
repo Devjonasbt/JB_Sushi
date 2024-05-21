@@ -164,7 +164,7 @@ checkoutBtnModal.addEventListener('click', function () {
     }).join("%0A");
 
     const address = encodeURIComponent(addressInputModal.value);
-    const phone = '11988201237';
+    const phone = '1188201237';
     const total = cartList.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalFormatted = total.toLocaleString('pt-BR', {
         style: 'currency',
