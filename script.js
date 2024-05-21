@@ -171,53 +171,21 @@ checkoutBtnModal.addEventListener('click', function () {
         currency: 'BRL'
     });
 
+    // Adicionando a forma de pagamento à mensagem
+    let formaPagamento;
+    if (document.getElementById("pagamento_dinheiro").checked) {
+        formaPagamento = "Dinheiro";
+    } else if (document.getElementById("pagamento_pix").checked) {
+        formaPagamento = "Pix";
+    } else if (document.getElementById("pagamento_cartao").checked) {
+        formaPagamento = "Cartão de Crédito";
+    }
+
     const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ATotal: ${totalFormatted}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereço: ${address}%0A%0AMuito obrigado!`;
+
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 
     cartList = [];
     updateCartModal();
     updateCartCounter();
-});
-
-function checkRestaurantOpen() {
-    const data = new Date();
-    const hora = data.getHours();
-
-    return hora >= 10 && hora < 23;
-}
-
-const spanItem = document.getElementById('date-span');
-const isOpen = checkRestaurantOpen();
-
-if (isOpen) {
-    spanItem.classList.remove('bg-red-500');
-    spanItem.classList.add('bg-green-600');
-} else {
-    spanItem.classList.remove('bg-green-600');
-    spanItem.classList.add('bg-red-500');
-}
-document.getElementById("checkout-btn").addEventListener("click", function() {
-    // Verificar qual opção de pagamento foi selecionada
-    var formaPagamento;
-
-    if (document.getElementById("pagamento_dinheiro").checked) {
-        formaPagamento = "dinheiro";
-    } else if (document.getElementById("pagamento_pix").checked) {
-        formaPagamento = "pix";
-    } else if (document.getElementById("pagamento_cartao").checked) {
-        formaPagamento = "cartao";
-    } else {
-        // Caso nenhuma opção seja selecionada, você pode exibir uma mensagem de erro ou tomar outra ação
-        Toastify({
-            text: "Por favor, selecione uma forma de pagamento!",
-            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
-            duration: 3000
-        }).showToast();
-        return; // Sair da função se nenhuma opção for selecionada
-    }
-
-    // Aqui você pode fazer o que quiser com a forma de pagamento selecionada
-    console.log("Forma de pagamento selecionada:", formaPagamento);
-
-    // Continuar com o processamento do pedido, por exemplo, enviando para o backend
 });
