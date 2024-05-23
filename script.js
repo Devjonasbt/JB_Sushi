@@ -208,7 +208,7 @@ checkoutBtnModal.addEventListener('click', function () {
 
     // Codifique o endereço de entrega
     const address = encodeURIComponent(addressInputModal.value);
-    const phone = '5511988201237';
+    const phone = '5511913620016';
 
     // Calcule o total do pedido
     const total = cartList.reduce((acc, item) => acc + item.price * item.quantity, 0);
