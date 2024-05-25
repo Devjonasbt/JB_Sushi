@@ -203,7 +203,7 @@ checkoutBtnModal.addEventListener('click', function () {
 
     // Mapeie os itens do carrinho para uma string formatada
     const cartItems = cartList.map((item) => {
-        return `(${item.quantity}) ${item.name} - Preço: R$${item.price.toFixed(2)}`;
+        return `${item.quantity}* ${item.name} - R$${item.price.toFixed(2)}`;
     }).join("%0A");
 
     // Codifique o endereço de entrega
@@ -227,7 +227,7 @@ checkoutBtnModal.addEventListener('click', function () {
     const totalPedidoFormatado = totalPedidoComTaxa.toFixed(2);
 
     // Crie a mensagem com todos os detalhes do pedido
-    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ADescrição do pedido: ${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0A%0ATotal: R$${totalPedidoFormatado}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereço de entrega: ${address}%0A%0AMuito obrigado!`;
+    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ADescrição do pedido: ${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0A%0ATotal: R$${totalPedidoFormatado}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereço de entrega:%OA ${address}%0A%0AMuito obrigado!`;
 
     // Abra o link do WhatsApp com a mensagem
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
