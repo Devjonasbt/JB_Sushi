@@ -227,7 +227,7 @@ checkoutBtnModal.addEventListener('click', function () {
     const totalPedidoFormatado = totalPedidoComTaxa.toFixed(2);
 
     // Crie a mensagem com todos os detalhes do pedido
-    const message = `Olá! Aqui estão os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ADescrição do pedido: ${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0A%0ATotal: R$${totalPedidoFormatado}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereço de entrega:%0A${address}%0A%0AMuito obrigado!`;
+    const message = `Ola! Aqui estao os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ADescricao do pedido: ${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0A%0ATotal: R$${totalPedidoFormatado}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereco de entrega:%0A${address}%0A%0AMuito obrigado!`;
 
     // Abra o link do WhatsApp com a mensagem
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
