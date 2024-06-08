@@ -243,7 +243,7 @@ function checkRestaurantOpen() {
     const data = new Date();
     const hora = data.getHours();
 
-    return hora >=  && hora < ;
+    return hora >= 07 && hora 06 < ;
 }
 
 const spanItem = document.getElementById('date-span');
