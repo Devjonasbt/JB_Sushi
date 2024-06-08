@@ -131,9 +131,7 @@ addressInputModal.addEventListener('input', function (event) {
     }
 });
 
-
 // Finalizar pedido
-// Combine os dois ouvintes de evento em um único ouvinte
 checkoutBtnModal.addEventListener('click', function () {
     // Verifique se o carrinho está vazio
     if (cartList.length === 0) {
@@ -142,12 +140,11 @@ checkoutBtnModal.addEventListener('click', function () {
             text: "Seu carrinho está vazio. Adicione itens antes de finalizar o pedido.",
             duration: 3000,
             close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "left", // `left`, `center` or `right`
+            gravity: "top",
+            position: "left",
             backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
         }).showToast();
         
-        // Retorne para sair da função
         return;
     }
 
@@ -174,7 +171,7 @@ checkoutBtnModal.addEventListener('click', function () {
             backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
             duration: 3000
         }).showToast();
-        return; // Saia da função se nenhuma opção for selecionada
+        return;
     }
 
     // Verifique se o restaurante está aberto
@@ -185,14 +182,14 @@ checkoutBtnModal.addEventListener('click', function () {
             duration: 3000,
             destination: "https://github.com/Devjonasbt/JB_Sushi.git",
             close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "left", // `left`, `center` or `right`
-            stopOnFocus: true, // Previne o fechamento do toast ao passar o mouse por cima
+            gravity: "top",
+            position: "left",
+            stopOnFocus: true,
             style: {
                 background: "#ef4444",
             },
         }).showToast();
-        return; // Saia da função se o restaurante estiver fechado
+        return;
     }
 
     // Taxa de entrega fixa
@@ -238,12 +235,9 @@ checkoutBtnModal.addEventListener('click', function () {
     updateCartCounter();
 });
 
-
 function checkRestaurantOpen() {
-    const data = new Date();
-    const hora = data.getHours();
-
-    return hora >= 07 && hora 06 < ;
+    // Sempre retornar verdadeiro, indicando que o restaurante está sempre aberto
+    return true;
 }
 
 const spanItem = document.getElementById('date-span');
