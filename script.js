@@ -82,7 +82,7 @@ function updateCartModal() {
                 </button>
             </div>
         `;
-        total += item.price * item.quantity;
+        total += item.price * item.quantity + 5;
 
         cartItemsModal.appendChild(cartItemElement);
     });
@@ -145,6 +145,17 @@ checkoutBtnModal.addEventListener('click', function () {
             backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
         }).showToast();
         
+        return;
+    }
+
+    // Verifique se o nome do usuário está preenchido
+    const userName = document.getElementById('user-name').value.trim();
+    if (userName === '') {
+        Toastify({
+            text: "Por favor, digite seu nome!",
+            backgroundColor: "linear-gradient(to right, #ff4e50, #f9d423)",
+            duration: 3000
+        }).showToast();
         return;
     }
 
@@ -215,16 +226,10 @@ checkoutBtnModal.addEventListener('click', function () {
     });
 
     // Adicione a descrição do pedido à mensagem, se houver
-    const descriptionText = orderDescription ? ` ${encodeURIComponent(orderDescription)}` : '';
+    const descriptionText = orderDescription ? `%0A%0ADescrição do pedido: ${encodeURIComponent(orderDescription)}` : '';
 
-    // Calcule o total do pedido, incluindo a taxa de entrega
-    const totalPedidoComTaxa = total + deliveryFee;
-
-    // Formate o total do pedido para exibição
-    const totalPedidoFormatado = totalPedidoComTaxa.toFixed(2);
-
-    // Crie a mensagem com todos os detalhes do pedido
-    const message = `Ola! Aqui estao os detalhes do meu pedido:%0A%0A${cartItems}%0A%0ADescricao do pedido: ${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0A%0ATotal: R$${totalPedidoFormatado}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereco de entrega:%0A${address}%0A%0AMuito obrigado!`;
+    // Adicione o nome do usuário à mensagem
+    const message = `Cliente: ${userName}%0A%0AOla! Aqui esta os detalhes do meu pedido:%0A%0A${cartItems}${descriptionText}%0A%0ASubTotal:${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0ATotal: R$${(total + deliveryFee).toFixed(2)}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereço de entrega:%0A${address}%0A%0AMuito obrigado!%0A%0A`;
 
     // Abra o link do WhatsApp com a mensagem
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
