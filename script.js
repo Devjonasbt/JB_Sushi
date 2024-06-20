@@ -170,10 +170,14 @@ if (checkoutBtnModal) {
         const address = encodeURIComponent(addressInputModal.value);
         const phone = '5511913620016';
         const total = cartList.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        const totalFormatted = total.toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        });
+        // Função para formatar valor monetário sem espaço entre 'R$' e o valor
+        function formatCurrency(value) {
+            return `R$${value.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Dentro do evento checkoutBtnModal.addEventListener('click', function () { ... })
+        const totalFormatted = formatCurrency(total);
+
 
         const descriptionText = orderDescription ? `%0A%0ADescrição do pedido: ${encodeURIComponent(orderDescription)}` : '';
         const message = `Cliente: ${userName}%0A%0AOla! Aqui esta os detalhes do meu pedido:%0A%0A${cartItems}${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0ATotal: R$${(total + deliveryFee).toFixed(2)}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereco de entrega:%0A${address}%0A%0AMuito obrigado!%0A%0A`;
@@ -199,6 +203,7 @@ function showToast(message, color) {
         position: "left",
         backgroundColor: color,
     }).showToast();
+    
 }
 
 const spanItem = document.getElementById('date-span');
@@ -211,3 +216,155 @@ if (isOpen) {
     spanItem.classList.remove('bg-green-600');
     spanItem.classList.add('bg-red-500');
                 }
+
+
+                
+                document.addEventListener('DOMContentLoaded', function() {
+                    const openCustomComboModalBtn = document.getElementById('open-custom-combo-modal');
+                    const customComboModal = document.getElementById('custom-combo-modal');
+                    const closeCustomComboModalBtn = document.getElementById('close-custom-combo-modal');
+                    const addToCartComboBtn = document.getElementById('add-to-cart-combo');
+                    const comboOptionsContainer = document.getElementById('combo-options');
+                    const comboTotalElement = document.getElementById('combo-total');
+                    let currentComboItems = [];
+                    let currentComboTotal = 0;
+                
+                    // Evento para abrir o modal
+                    openCustomComboModalBtn.addEventListener('click', function() {
+                        buildComboOptions();
+                        customComboModal.style.display = 'block';
+                    });
+                
+                    // Evento para fechar o modal
+                    closeCustomComboModalBtn.addEventListener('click', function() {
+                        customComboModal.style.display = 'none';
+                        resetComboOptions();
+                    });
+                
+                    // Construir as opções do combo dinamicamente
+                    function buildComboOptions() {
+                        // Exemplo de opções (você pode adicionar suas próprias opções aqui)
+                        const comboItems = [
+                            { name: 'Niguiri', price: 2.00 },
+                            { name: 'Joe', price: 2.30 },
+                            { name: 'hussomaki', price: 2.00 },
+                            { name: 'sashimi', price: 2.00 },
+                            { name: 'hussomaki com salmao grelhado', price: 2.10 },
+                            { name: 'Joe maçaricado', price: 2.40 },
+                            { name: 'frutamaki', price: 1.50 },
+                            { name: 'hot-roll', price: 2.00 },
+                            { name: 'uramaki', price: 1.80 }
+                        ];
+                
+                        comboOptionsContainer.innerHTML = '';
+                
+                        comboItems.forEach(item => {
+                            const div = document.createElement('div');
+                            div.classList.add('combo-item');
+                            div.innerHTML = `
+                                <div>
+                                    <span>${item.name} - R$ ${item.price.toFixed(2)}</span>
+                                    <div class="quantity-controls">
+                                        <button class="add-combo-item btn" data-name="${item.name}" data-price="${item.price}">+</button>
+                                        <span class="item-quantity" data-name="${item.name}">0</span>
+                                        <button class="remove-combo-item btn" data-name="${item.name}" data-price="${item.price}">-</button>
+                                    </div>
+                                </div>
+                            `;
+                            comboOptionsContainer.appendChild(div);
+                
+                            // Eventos para adicionar e remover itens do combo
+                            const addButton = div.querySelector('.add-combo-item');
+                            const removeButton = div.querySelector('.remove-combo-item');
+                
+                            addButton.addEventListener('click', function() {
+                                const itemName = addButton.getAttribute('data-name');
+                                const itemPrice = parseFloat(addButton.getAttribute('data-price'));
+                                addToCombo(itemName, itemPrice);
+                            });
+                
+                            removeButton.addEventListener('click', function() {
+                                const itemName = removeButton.getAttribute('data-name');
+                                const itemPrice = parseFloat(removeButton.getAttribute('data-price'));
+                                removeFromCombo(itemName, itemPrice);
+                            });
+                        });
+                    }
+                
+                    // Adicionar item ao combo
+                    function addToCombo(name, price) {
+                        const existingItem = currentComboItems.find(item => item.name === name);
+                        if (existingItem) {
+                            existingItem.quantity += 1;
+                        } else {
+                            currentComboItems.push({ name, price, quantity: 1 });
+                        }
+                        const quantitySpan = comboOptionsContainer.querySelector(`.item-quantity[data-name="${name}"]`);
+                        quantitySpan.textContent = existingItem ? existingItem.quantity.toString() : '1';
+                        updateComboTotal();
+                    }
+                
+                    // Remover item do combo
+                    function removeFromCombo(name, price) {
+                        const index = currentComboItems.findIndex(item => item.name === name);
+                        if (index !== -1) {
+                            const item = currentComboItems[index];
+                            if (item.quantity > 0) {
+                                item.quantity -= 1;
+                                const quantitySpan = comboOptionsContainer.querySelector(`.item-quantity[data-name="${name}"]`);
+                                quantitySpan.textContent = item.quantity.toString();
+                                if (item.quantity === 0) {
+                                    currentComboItems.splice(index, 1);
+                                }
+                            }
+                        }
+                        updateComboTotal();
+                    }
+                
+                    // Atualizar o preço total do combo
+                    function updateComboTotal() {
+                        currentComboTotal = currentComboItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+                        comboTotalElement.textContent = `Total: R$ ${currentComboTotal.toFixed(2)}`;
+                    }
+                
+                    // Resetar opções do combo ao fechar o modal
+                    function resetComboOptions() {
+                        currentComboItems = [];
+                        currentComboTotal = 0;
+                        updateComboTotal();
+                
+                        // Resetar quantidades exibidas no modal
+                        const quantitySpans = comboOptionsContainer.querySelectorAll('.item-quantity');
+                        quantitySpans.forEach(span => {
+                            span.textContent = '0';
+                        });
+                    }
+                
+                    // Adicionar ao carrinho quando finalizar
+                    addToCartComboBtn.addEventListener('click', function() {
+                        if (currentComboItems.length > 0) {
+                            currentComboItems.forEach(item => {
+                                // Adicionar cada item ao carrinho original (cartList)
+                                for (let i = 0; i < item.quantity; i++) {
+                                    addToCart(item.name, item.price);
+                                }
+                            });
+                            customComboModal.style.display = 'none';
+                            resetComboOptions();
+                        }
+                    });
+                
+                    // Função simulada para adicionar ao carrinho (cartList)
+                    function addToCart(name, price) {
+                        const existingItem = cartList.find(item => item.name === name);
+                        if (existingItem) {
+                            existingItem.quantity += 1;
+                        } else {
+                            cartList.push({ name, price, quantity: 1 });
+                        }
+                        updateCartModal();
+                        updateCartCounter();
+                    }
+                
+                });
+                

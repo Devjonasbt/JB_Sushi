@@ -51,7 +51,39 @@
     <div id="menu">
 
         <main class="grid grid-cols-1 md:grid-cols-2  gap-7 md:gap-16 mx-auto max-w-7xl px-3 mb-16">
+          
+            
+            <div id="custom-combo-modal" class="modal">
+                <div class="modal-content">
+                    <span id="close-custom-combo-modal" class="close">&times;</span>
+                    <h2>Monte seu Combo</h2>
+                    <div id="combo-options" class="combo-options">
+                        <!-- Opções do combo serão adicionadas dinamicamente aqui -->
+                    </div>
+                    <p id="combo-total">Total: R$ 0,00</p>
+                    <button id="add-to-cart-combo" class="btn">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <!-- Botão para abrir o modal de customização -->
+            <div class="flex gap-3">
+                <img src="assets/monte seu combo.png" alt="" class="w-28 h-28 rounded-md hover:scale-110 hover:rotate-2 duration-300">
+                <div>
+                    <h2 class="font-bold">Monte seu próprio combo</h2>
+                    <p class="text-sm">Escolha seus sushi preferidos e monte você mesmo seu combo.</p>
+            
+                    <div class="flex items-center justify-between">
+                        <p id="custom-combo-price" class="font-bold text-lg">R$ ???</p>
+                        <div class="combo">
+                            <button id="open-custom-combo-modal" class="btn" >Montar combo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+
             <div class="flex gap-3 ">
+
                 <img src="./assets/combo1.jpeg" alt="sushi"
                     class="w-28 h-28 rounded-md hover:scale-110 hover:rotate-2 duration-300">
 
@@ -62,7 +94,7 @@
                     <div class="flex items-center justify-between">
                         <p class="font-bold text-lg">R$56,00</p>
                         <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name="Combinado de salmao" data-price="56.00">
-    <i class="fa fa-cart-plus text-lg text-white"></i>
+                         <i class="fa fa-cart-plus text-lg text-white"></i>
                         </button>
                     </div>
                 </div>
@@ -394,6 +426,23 @@
                         <p class="font-bold text-lg">R$ 39,90</p>
                         <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name=" combo flor"
                             data-price="45.90">
+                            <i class="fa fa-cart-plus text-lg text-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div> 
+            <div class="flex gap-3">
+                <img src="./assets/barca.jpeg" alt="sushi"
+                    class="w-28 h-28 rounded-md hover:scale-110 hover:rotate-2 duration-300">
+
+                <div>
+                    <h2 class="font-bold"> Barca grande - 45 peças</h2>
+                    <p class="text-sm">1 flor com 10 fatias de sashimir, 5 uramaki, 8 joe, 5 uramaki de fruta, 4 niguiiri, 7 hussomaki, 6 hot-roll. </p>
+
+                    <div class="flex items-center justify-between">
+                        <p class="font-bold text-lg">R$ 99,90</p>
+                        <button class="bg-gray-900 px-5 rounded add-to-cart-btn" data-name=" barca grande"
+                            data-price="99.90">
                             <i class="fa fa-cart-plus text-lg text-white"></i>
                         </button>
                     </div>
