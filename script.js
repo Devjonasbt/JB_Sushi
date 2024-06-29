@@ -179,7 +179,7 @@ if (checkoutBtnModal) {
         const totalFormatted = formatCurrency(total);
 
 
-        const descriptionText = orderDescription ? `%0A%0ADescrição do pedido: ${encodeURIComponent(orderDescription)}` : '';
+        const descriptionText = orderDescription ? `%0A%0ADescricao do pedido: ${encodeURIComponent(orderDescription)}` : '';
         const message = `Cliente: ${userName}%0A%0AOla! Aqui esta os detalhes do meu pedido:%0A%0A${cartItems}${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0ATotal: R$${(total + deliveryFee).toFixed(2)}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereco de entrega:%0A${address}%0A%0AMuito obrigado!%0A%0A`;
 
         window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
