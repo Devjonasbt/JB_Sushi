@@ -248,12 +248,14 @@ if (isOpen) {
                             { name: 'Niguiri', price: 2.00 },
                             { name: 'Joe', price: 2.30 },
                             { name: 'hussomaki', price: 2.00 },
-                            { name: 'sashimi', price: 2.90 },
-                            { name: 'hussomaki com salmao grelhado', price: 2.10 },
+                            { name: 'sashimi', price: 3.40 },
+                            { name: 'uramaki salmao grelhado', price: 2.10 },
                             { name: 'Joe maçaricado', price: 2.40 },
                             { name: 'frutamaki', price: 1.50 },
                             { name: 'hot-roll', price: 2.00 },
-                            { name: 'uramaki', price: 1.80 }
+                            { name: 'niguiri de tilapia', price: 1.70 },
+                            { name: 'joe de tilapia', price: 2.00 },
+                            { name: 'uramaki', price: 2.00 }
                         ];
                 
                         comboOptionsContainer.innerHTML = '';
