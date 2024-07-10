@@ -246,11 +246,11 @@ if (isOpen) {
                         // Exemplo de opções (você pode adicionar suas próprias opções aqui)
                         const comboItems = [
                             { name: 'Niguiri', price: 2.00 },
-                            { name: 'Joe', price: 2.30 },
+                            { name: 'Joe', price: 2.50 },
                             { name: 'hussomaki', price: 2.00 },
                             { name: 'sashimi', price: 3.40 },
                             { name: 'uramaki salmao grelhado', price: 2.10 },
-                            { name: 'Joe maçaricado', price: 2.40 },
+                            { name: 'Joe maçaricado', price: 2.80 },
                             { name: 'frutamaki', price: 1.50 },
                             { name: 'hot-roll', price: 2.00 },
                             { name: 'niguiri de tilapia', price: 1.70 },
