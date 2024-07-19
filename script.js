@@ -81,8 +81,7 @@ function updateCartModal() {
         cartItemsModal.appendChild(cartItemElement);
     });
 
-    const deliveryFee = 5.00;
-    total += deliveryFee;
+    
     cartTotalModal.textContent = total.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL'
@@ -164,7 +163,7 @@ if (checkoutBtnModal) {
             return;
         }
 
-        const deliveryFee = 5.00;
+      
         const orderDescription = orderDescriptionInput.value.trim();
         const cartItems = cartList.map(item => `${item.quantity} * ${item.name} - R$${item.price.toFixed(2)}`).join("%0A");
         const address = encodeURIComponent(addressInputModal.value);
@@ -180,7 +179,7 @@ if (checkoutBtnModal) {
 
 
         const descriptionText = orderDescription ? `%0A%0ADescricao do pedido: ${encodeURIComponent(orderDescription)}` : '';
-        const message = `Cliente: ${userName}%0A%0AOla! Aqui esta os detalhes do meu pedido:%0A%0A${cartItems}${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0ATaxa de entrega: R$${deliveryFee.toFixed(2)}%0ATotal: R$${(total + deliveryFee).toFixed(2)}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereco de entrega:%0A${address}%0A%0AMuito obrigado!%0A%0A`;
+        const message = `Cliente: ${userName}%0A%0AOla! Aqui esta os detalhes do meu pedido:%0A%0A${cartItems}${descriptionText}%0A%0ASubTotal: ${totalFormatted}%0A%0AForma de pagamento: ${formaPagamento}%0A%0AEndereco de entrega:%0A${address}%0A%0A%0ATaxa de entrega: R$%0ATotal: R$`;
 
         window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 
