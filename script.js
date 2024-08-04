@@ -252,8 +252,6 @@ if (isOpen) {
                             { name: 'Joe maçaricado', price: 2.80 },
                             { name: 'frutamaki', price: 1.50 },
                             { name: 'hot-roll', price: 2.00 },
-                            { name: 'niguiri de tilapia', price: 1.70 },
-                            { name: 'joe de tilapia', price: 2.00 },
                             { name: 'uramaki', price: 2.00 }
                         ];
                 
